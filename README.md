@@ -1,31 +1,13 @@
-# KornAiStudio Scan & Voice — separate new PWA
+# KornAiStudio — Streamlit + PWA (separate new project)
 
-This project is **independent** of `vocabularychallenge/texttospeedkorn`. No existing repository or deployment is modified.
+## Two distinct deployments
+1. Deploy `app.py` with `requirements.txt` and `packages.txt` to a NEW Streamlit Community Cloud app. This is the real MP3 engine. Do not deploy `server.py` to Streamlit.
+2. Upload only the CONTENTS of `pwa/` to a NEW GitHub Pages repository or to a dedicated subfolder on GitHub Pages. The PWA shell installs on phones and opens the separate Streamlit app.
+3. Open the PWA, paste the new Streamlit app URL, and save.
 
-## Run locally
+**Important:** PWA is a launcher, not an offline MP3 engine. Streamlit audio generation requires internet. This is not an embedded native Streamlit PWA. The existing `texttospeedkorn` repository remains unchanged.
 
-1. Install Python 3.10+ and FFmpeg (`ffmpeg` must be available on PATH).
-2. `pip install -r requirements.txt`
-3. `uvicorn server:app --host 0.0.0.0 --port 8000`
-4. Open `http://localhost:8000`. For camera/microphone/PWA on a phone, deploy over HTTPS.
+Other features (OCR, image AI, speech-to-text, recorded voice to MP3) are not completed in this version.
 
-## Current features
-- EN/TH mixed text to actual MP3 with Google gTTS (online), download, OS share sheet.
-- Image upload/camera, English+Thai OCR via Tesseract.js CDN (online first load).
-- EN/TH translation via MyMemory public demo endpoint (450 characters per request; may be rate-limited, requires user review).
-- Microphone recording converted in browser to actual MP3 using lamejs CDN (first load online), download and share.
-- File name field; editable extracted text; local text saving; PWA manifest and service worker.
-- Illustrated scene **templates** (SVG) downloadable; **not generative AI illustration**.
-
-## Known limits / safety
-- Requires an online server for gTTS, and FFmpeg to combine mixed-language MP3 segments.
-- Free Google gTTS access is unofficial; do not assume commercial rights or guaranteed availability.
-- Translation sends text to MyMemory; avoid sensitive content.
-- OCR first load needs internet; camera and microphone require HTTPS or localhost.
-- Web Share API file sharing depends on browser and installed apps; download fallback is provided.
-- PWA shell can open offline after install, but cloud TTS and translation cannot work offline.
-- No cloud storage, login, payments, or image-generation API integration.
-- On some browsers the CDN MP3 encoder may be blocked; show explicit failure, never mislabel WebM as MP3.
-
-## Production notes
-For deployment choose an HTTPS Python host with FFmpeg. GitHub Pages alone cannot run `/api/tts`. Test OCR, mic recording, download and file share on target Android browsers. Image AI needs a separately selected provider and an explicit license/budget agreement.
+## Custom app icon
+The supplied KornAiStudio logo is used for 192x192 and 512x512 PWA icons.
